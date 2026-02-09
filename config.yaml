@@ -1,0 +1,119 @@
+# CONFIGURACIÓN SEGURA DE LINKEDIN AUTOMATION
+# ¡NO MODIFICAR LOS LÍMITES DE SEGURIDAD!
+
+# =============== CREDENCIALES ===============
+linkedin:
+  email: "tu_email@ejemplo.com"  # Cambia esto
+  password: "tu_contraseña"      # Cambia esto
+  # ⚠️ NUNCA compartas este archivo con tus credenciales
+
+# =============== LÍMITES DE SEGURIDAD ===============
+limits:
+  # LÍMITES ABSOLUTOS - NO AUMENTAR
+  daily_connections: 25          # Máximo por día (para evitar baneo)
+  weekly_connections: 100        # Máximo por semana
+  connections_per_hour: 8        # Máximo por hora
+  messages_per_day: 40           # Máximo mensajes/día
+  
+  # ⏱️ TIEMPOS DE SEGURIDAD (en segundos)
+  min_action_delay: 12           # Mínimo entre acciones
+  max_action_delay: 30           # Máximo entre acciones
+  human_scroll_delay: 3          # Tiempo de scroll humano
+  page_load_timeout: 30          # Máximo espera carga página
+
+# =============== BÚSQUEDA DE PERFILES ===============
+search:
+  keywords: "CEO Founder Director"  # Palabras clave separadas por espacios
+  locations: "España México Colombia"  # Países/ciudades
+  industries: "Tecnología Marketing Ventas"  # Industrias
+  exclude_keywords: "Recruiter HR Universidad"  # Excluir estos
+  
+  # FILTROS DE CALIDAD
+  min_connections: 100           # Conexiones mínimas que debe tener
+  required_keywords: 1           # Al menos 1 keyword debe coincidir
+
+# =============== MENSAJES PERSONALIZADOS ===============
+messages:
+  connection_request:
+    - template: "Hola {{first_name}}, vi tu perfil y me gustaría conectar contigo. Trabajo en {{industry}} también."
+    - template: "Hola {{first_name}}, compartimos interés en {{keyword}}. ¿Te parece si conectamos?"
+    - template: "{{first_name}}, veo que trabajas en {{company}}. Me encantaría conectar."
+  
+  follow_up:
+    - template: "Gracias por conectar, {{first_name}}. ¿Cómo va todo en {{company}}?"
+    - template: "{{first_name}}, gracias por aceptar. ¿Qué proyectos interesantes tienes actualmente?"
+  
+  # VARIABLES DISPONIBLES: {{first_name}}, {{last_name}}, {{company}}, {{position}}, {{industry}}, {{keyword}}
+  
+  # 📊 ROTACIÓN AUTOMÁTICA
+  rotate_templates: true         # Rota plantillas para no repetir
+  personalized_first_name: true  # Siempre incluir nombre
+
+# =============== COMPORTAMIENTO HUMANO ===============
+behavior:
+  scroll_randomly: true          # Scroll aleatorio como humano
+  view_profiles_before_connect: true  # Ver perfil antes de conectar
+  random_mouse_movements: true   # Movimientos de ratón aleatorios
+  
+  # HORARIOS DE TRABAJO (formato 24h)
+  work_schedule:
+    monday: ["09:00", "18:00"]
+    tuesday: ["09:00", "18:00"]
+    wednesday: ["09:00", "18:00"]
+    thursday: ["09:00", "18:00"]
+    friday: ["09:00", "16:00"]
+    saturday: ["10:00", "14:00"]
+    sunday: []  # Vacío = no trabaja
+
+# =============== EXPORTACIÓN ===============
+export:
+  format: "csv"                  # csv, excel, json
+  fields:                        # Campos a exportar
+    - name
+    - position
+    - company
+    - location
+    - profile_url
+    - connection_date
+    - message_sent
+  
+  auto_export: true              # Exportar automáticamente cada día
+  backup_folder: "./backups"     # Carpeta de respaldos
+
+# =============== MONITOREO Y ALERTAS ===============
+monitoring:
+  check_every_minutes: 5         # Revisar estado cada X minutos
+  
+  alerts:
+    captcha_detected: true       # Alerta si aparece CAPTCHA
+    login_required: true         # Alerta si pide login
+    limit_reached: true          # Alerta al alcanzar límites
+    error_rate_high: true        # Alerta si >10% errores
+  
+  # ESTADÍSTICAS QUE VERÁS
+  show_dashboard:
+    - connections_today
+    - messages_sent
+    - profiles_viewed
+    - success_rate
+    - time_remaining_today
+
+# =============== MODO SEGURO ===============
+safe_mode:
+  enabled: true                  # ACTIVAR SIEMPRE
+  max_errors_before_stop: 3      # Parar después de 3 errores
+  pause_on_captcha: true         # Pausar si detecta CAPTCHA
+  test_mode: false               # True = sólo ver, no interactuar
+
+# =============== RECUPERACIÓN ===============
+recovery:
+  auto_backup: true              # Backup automático cada hora
+  save_session: true             # Guardar cookies para no reloguear
+  restore_on_crash: true         # Intentar recuperar si falla
+
+# INTERFAZ DE USUARIO
+ui:
+  language: "es"                 # es, en, pt
+  show_human_messages: true      # Mostrar acciones en lenguaje humano
+  notifications: true            # Notificaciones de escritorio
+  color_theme: "blue"            # blue, dark, light
